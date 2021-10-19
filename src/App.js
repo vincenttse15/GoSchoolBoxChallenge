@@ -1,56 +1,88 @@
 import './App.css';
 import { RiDivideFill, RiCloseFill } from 'react-icons/ri';
 import { CgMathMinus, CgMathEqual, CgMathPlus} from 'react-icons/cg';
+import { useState } from 'react';
 
 function App() {
+  const [previousExpression, setPreviousExpression] = useState('');
+  const [expression, setExpression] = useState('');
+
   return (
     <div className="App">
       <div className="calculator-container">
         <div className="text-container">
-
+          {previousExpression === '' 
+          ?
+            <div className="expression">{' '}</div>
+          :
+            <div className="expression">{previousExpression}</div>
+          }
+          {expression === '' 
+          ? 
+            <div className="expression">0</div>
+          :
+            <div className="expression">{expression}</div>
+          }
         </div>
         <div className="buttons-container">
           <div className="row-container">
-            <button className="button operators">(</button>
-            <button className="button operators">)</button>
-            <button className="button operators">AC</button>
-            <button className="button operators">DEL</button>
+            <button className="button operators" onClick={() => setExpression(expression + "(")}>(</button>
+            <button className="button operators" onClick={() => setExpression(expression + ")")}>)</button>
+            <button className="button operators" 
+              onClick={() => 
+                {
+                  setExpression('');
+                  setPreviousExpression('');
+                }
+              }
+            >
+              AC
+            </button>
+            <button className="button operators" 
+              onClick={() => 
+                {
+                  if (expression.length > 0) setExpression(expression.slice(0, expression.length - 1));
+                }
+              }
+            >
+              DEL
+            </button>
           </div>
 
           <div className="row-container">
-            <button className="button numbers">7</button>
-            <button className="button numbers">8</button>
-            <button className="button numbers">9</button>
-            <button className="button operators">
+            <button className="button numbers" onClick={() => setExpression(expression + "7")}>7</button>
+            <button className="button numbers" onClick={() => setExpression(expression + "8")}>8</button>
+            <button className="button numbers" onClick={() => setExpression(expression + "9")}>9</button>
+            <button className="button operators" onClick={() => setExpression(expression + "/")}>
               <RiDivideFill className="icon"/>
             </button>
           </div>
 
           <div className="row-container">
-            <button className="button numbers">4</button>
-            <button className="button numbers">5</button>
-            <button className="button numbers">6</button>
-            <button className="button operators">
+            <button className="button numbers" onClick={() => setExpression(expression + "4")}>4</button>
+            <button className="button numbers" onClick={() => setExpression(expression + "5")}>5</button>
+            <button className="button numbers" onClick={() => setExpression(expression + "6")}>6</button>
+            <button className="button operators" onClick={() => setExpression(expression + "*")}>
               <RiCloseFill className="icon"/>
             </button>
           </div>
 
           <div className="row-container">
-            <button className="button numbers">1</button>
-            <button className="button numbers">2</button>
-            <button className="button numbers">3</button>
-            <button className="button operators">
+            <button className="button numbers" onClick={() => setExpression(expression + "1")}>1</button>
+            <button className="button numbers" onClick={() => setExpression(expression + "2")}>2</button>
+            <button className="button numbers" onClick={() => setExpression(expression + "3")}>3</button>
+            <button className="button operators" onClick={() => setExpression(expression + "-")}>
               <CgMathMinus className="icon"/>
             </button>
           </div>
 
           <div className="row-container">
-            <button className="button numbers">0</button>
-            <button className="button numbers">.</button>
+            <button className="button numbers" onClick={() => setExpression(expression + "0")}>0</button>
+            <button className="button numbers" onClick={() => setExpression(expression + ".")}>.</button>
             <button className="button equal">
               <CgMathEqual className="icon"/>
             </button>
-            <button className="button operators">
+            <button className="button operators" onClick={() => setExpression(expression + "+")}>
               <CgMathPlus className="icon"/>
             </button>
           </div>
