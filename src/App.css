@@ -50,6 +50,13 @@ body {
   font-size: 20px;
   overflow: auto;
   white-space: nowrap;
+}
+
+.prev-expression {
+  align-items: flex-start;
+}
+
+.current-expression {
   align-items: flex-end;
 }
 

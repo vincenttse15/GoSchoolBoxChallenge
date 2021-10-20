@@ -2,6 +2,7 @@ import './App.css';
 import { RiDivideFill, RiCloseFill } from 'react-icons/ri';
 import { CgMathMinus, CgMathEqual, CgMathPlus} from 'react-icons/cg';
 import { useState } from 'react';
+import { Evaluator } from './Evaluator/Evaluator';
 
 function App() {
   const [previousExpression, setPreviousExpression] = useState('');
@@ -13,15 +14,15 @@ function App() {
         <div className="text-container">
           {previousExpression === '' 
           ?
-            <div className="expression">{' '}</div>
+            <div className="expression prev-expression">{' '}</div>
           :
-            <div className="expression">{previousExpression}</div>
+            <div className="expression prev-expression">{previousExpression}</div>
           }
           {expression === '' 
           ? 
-            <div className="expression">0</div>
+            <div className="expression current-expression">0</div>
           :
-            <div className="expression">{expression}</div>
+            <div className="expression current-expression">{expression}</div>
           }
         </div>
         <div className="buttons-container">
@@ -79,7 +80,16 @@ function App() {
           <div className="row-container">
             <button className="button numbers" onClick={() => setExpression(expression + "0")}>0</button>
             <button className="button numbers" onClick={() => setExpression(expression + ".")}>.</button>
-            <button className="button equal">
+            <button className="button equal" 
+              onClick={() => 
+                {
+                  const evaluator = new Evaluator(expression);
+                  let result = evaluator.evaluate();
+                  setPreviousExpression(expression);
+                  setExpression(result);
+                }
+              }
+            >
               <CgMathEqual className="icon"/>
             </button>
             <button className="button operators" onClick={() => setExpression(expression + "+")}>
