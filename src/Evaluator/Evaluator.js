@@ -53,6 +53,7 @@ export class Evaluator {
       this.process();
     }
 
+    if (this.operandStack.length > 1) return null;
     return isNaN(this.operandStack[this.operandStack.length - 1]) ? null : this.operandStack.pop();
   }
 }
