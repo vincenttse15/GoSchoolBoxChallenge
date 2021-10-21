@@ -20,12 +20,13 @@ export class Evaluator {
   }
 
   evaluate() {
-    const tokenized = this.expression.split(/([-+()*/])/g).filter(Boolean);
+    const tokenized = this.expression.split(/([-+()*/^])/g).filter(Boolean);
 
     for (let token of tokenized) {
       if (!isNaN(token)) {
         this.operandStack.push(+token);
-      } else {
+      } 
+      else {
         let operator = new Operator().getOperator(token);
 
         if (token === "(") {
@@ -52,6 +53,6 @@ export class Evaluator {
       this.process();
     }
 
-    return this.operandStack.pop();
+    return isNaN(this.operandStack[this.operandStack.length - 1]) ? null : this.operandStack.pop();
   }
 }

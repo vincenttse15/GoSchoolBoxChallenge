@@ -27,6 +27,12 @@ function App() {
         </div>
         <div className="buttons-container">
           <div className="row-container">
+            <button className="button operators" onClick={() => setExpression(expression + "^")}>
+              X
+              <span className="superscript">y</span>
+            </button>
+          </div>
+          <div className="row-container">
             <button className="button operators" onClick={() => setExpression(expression + "(")}>(</button>
             <button className="button operators" onClick={() => setExpression(expression + ")")}>)</button>
             <button className="button operators" 
@@ -85,8 +91,23 @@ function App() {
                 {
                   const evaluator = new Evaluator(expression);
                   let result = evaluator.evaluate();
-                  setPreviousExpression(expression);
-                  setExpression(result);
+                  if (result !== null) {
+                    result = result.toString();
+                    let ePos = result.indexOf("e+");
+                    
+                    if (ePos !== - 1) {
+                      let operandOne = result.slice(0, ePos);
+                      let operandTwo = result.slice(ePos + 2);
+                      setPreviousExpression(expression);
+                      setExpression(operandOne + "*10^" + operandTwo);
+                    } else {
+                      setPreviousExpression(expression);
+                      setExpression(result);
+                    }
+                  }
+                  else {
+                    setPreviousExpression("Invalid expression!");
+                  }
                 }
               }
             >

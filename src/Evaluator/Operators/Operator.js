@@ -88,6 +88,17 @@ class SubtractOperator extends Operator {
   }
 }
 
+class ExponentOperator extends Operator {
+  priority() {
+    return 3;
+  }
+
+  execute(operandOne, operandTwo) {
+    let result = Math.pow(operandOne, operandTwo);
+    return result;
+  }
+}
+
 const OperatorMap = {
   "+" : new AddOperator(),
   "-" : new SubtractOperator(),
@@ -95,6 +106,7 @@ const OperatorMap = {
   "/" : new DivideOperator(),
   "(" : new LParen(),
   ")" : new RParen(),
+  "^" : new ExponentOperator(),
 }
 
 
