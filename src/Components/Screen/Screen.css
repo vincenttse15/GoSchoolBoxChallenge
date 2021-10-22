@@ -1,0 +1,29 @@
+.text-container {
+  display: flex;
+  width: 100%;
+  height: 20%;
+  border: 1px solid #e0e0e0;
+  padding: 5px;
+  color: #FAFAFA;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.expression {
+  display: flex;
+  width: 100%;
+  height: 50%;
+  justify-content: flex-end;
+  font-size: 20px;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.prev-expression {
+  align-items: flex-start;
+}
+
+.current-expression {
+  align-items: flex-end;
+}
