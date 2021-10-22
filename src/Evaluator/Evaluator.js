@@ -20,6 +20,7 @@ export class Evaluator {
     return this.operatorStack[this.operatorStack.length - 1];
   }
 
+  // checks if there are two operators in a row that are not parentheses and minus because it can be used for a negative number
   validateExpression() {
     for (let i = 0; i < this.expression.length - 1; i++) {
       if (this.expression[i] in OperatorMap && this.expression[i + 1] in OperatorMap) {
@@ -33,7 +34,13 @@ export class Evaluator {
     return true;
   }
 
+  // replaces the negative signs with "$" so it does not get tokenized as an operator
   getNegativeNumbers() {
+    // if there is a minus in the first character it will always be used for a negative number
+    if (this.expression[0] === "-") {
+      this.expression = "$" + this.expression.slice(1);
+    }
+
     for (let i = 1; i < this.expression.length - 1; i++) {
       if (this.expression[i - 1] in OperatorMap && this.expression[i] === "-") {
         let firstHalf = this.expression.slice(0, i);
@@ -50,7 +57,7 @@ export class Evaluator {
     this.getNegativeNumbers();
 
     const tokenized = this.expression.split(/([-+()*/^])/g).filter(Boolean);
-
+    console.log(tokenized);
     for (let token of tokenized) {
       if (!isNaN(token)) {
         this.operandStack.push(token);
@@ -85,7 +92,6 @@ export class Evaluator {
       }
     }
 
-    console.log(this.operandStack);
     // evaluate the rest of the operators until operatorStack is empty
     while (this.operatorStack.length > 0) {
       this.process();

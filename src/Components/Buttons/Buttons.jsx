@@ -94,6 +94,7 @@ const Buttons = (props) => {
             }
             else {
               setPreviousExpression("Invalid expression!");
+              setExpression('');
             }
           }
           }
