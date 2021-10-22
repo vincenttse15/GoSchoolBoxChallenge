@@ -3,7 +3,7 @@ import Screen from '../screen/Screen';
 import Buttons from '../buttons/Buttons';
 import './Calculator.css';
 
-const Calculator = (props) => {
+const Calculator = () => {
   const [previousExpression, setPreviousExpression] = useState('');
   const [expression, setExpression] = useState('');
 
