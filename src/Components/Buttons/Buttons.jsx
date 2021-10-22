@@ -1,6 +1,6 @@
 import { RiDivideFill, RiCloseFill } from 'react-icons/ri';
 import { CgMathMinus, CgMathEqual, CgMathPlus } from 'react-icons/cg';
-import { Evaluator } from '../../Evaluator/Evaluator';
+import { Evaluator } from '../../evaluator/Evaluator';
 import './Buttons.css';
 
 const Buttons = (props) => {
@@ -16,9 +16,6 @@ const Buttons = (props) => {
         <button className="button operators" onClick={() => setExpression(expression + "^")}>
           X
           <span className="superscript">y</span>
-        </button>
-        <button className="button operators">
-          (-)
         </button>
       </div>
       <div className="row-container">
@@ -75,9 +72,13 @@ const Buttons = (props) => {
         <button className="button numbers" onClick={() => setExpression(expression + ".")}>.</button>
         <button className="button equal"
           onClick={() => {
-            const evaluator = new Evaluator(expression);
+            const evaluator = expression !== '' ? new Evaluator(expression) : new Evaluator("0");
             let result = evaluator.evaluate();
-            if (result !== null) {
+            if (result === "overflow") {
+              setPreviousExpression('Result is too big!');
+              setExpression('');
+            }
+            else if (result !== null) {
               result = result.toString();
               let ePos = result.indexOf("e+");
 

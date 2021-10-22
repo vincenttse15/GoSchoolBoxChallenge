@@ -1,4 +1,5 @@
-import Operator from './Operators/Operator';
+import Operator from './operators/Operator';
+import { OperatorMap } from './operators/Operator';
 
 export class Evaluator {
   constructor(expression) {
@@ -19,12 +20,44 @@ export class Evaluator {
     return this.operatorStack[this.operatorStack.length - 1];
   }
 
+  validateExpression() {
+    for (let i = 0; i < this.expression.length - 1; i++) {
+      if (this.expression[i] in OperatorMap && this.expression[i + 1] in OperatorMap) {
+        if (this.expression[i] !== "(" && this.expression[i] !== ")" &&
+            this.expression[i + 1] !== "(" && this.expression[i + 1] !== ")" && this.expression[i + 1] !== "-") {
+              return false;
+            }
+      }
+    }
+
+    return true;
+  }
+
+  getNegativeNumbers() {
+    for (let i = 1; i < this.expression.length - 1; i++) {
+      if (this.expression[i - 1] in OperatorMap && this.expression[i] === "-") {
+        let firstHalf = this.expression.slice(0, i);
+        let secondHalf = this.expression.slice(i + 1);
+        this.expression = firstHalf + "$" + secondHalf;
+      }
+    }
+  }
+
   evaluate() {
+    let valid = this.validateExpression();
+    if (!valid) return null;
+
+    this.getNegativeNumbers();
+
     const tokenized = this.expression.split(/([-+()*/^])/g).filter(Boolean);
 
     for (let token of tokenized) {
       if (!isNaN(token)) {
         this.operandStack.push(token);
+      }
+      else if (token.includes("$")) {
+        let modifiedToken = token.replace("$", "-");
+        this.operandStack.push(modifiedToken);
       } 
       else {
         let operator = new Operator().getOperator(token);
@@ -52,6 +85,7 @@ export class Evaluator {
       }
     }
 
+    console.log(this.operandStack);
     // evaluate the rest of the operators until operatorStack is empty
     while (this.operatorStack.length > 0) {
       this.process();
@@ -61,7 +95,7 @@ export class Evaluator {
     if (this.operandStack.length > 1) return null;
 
     // check overflow
-    if (this.operandStack[this.operandStack.length - 1] > Number.MAX_VALUE || this.operandStack[this.operandStack.length - 1] < Number.MIN_VALUE) return null;
+    if (this.operandStack[this.operandStack.length - 1] > Number.MAX_SAFE_INTEGER || this.operandStack[this.operandStack.length - 1] < Number.MIN_SAFE_INTEGER) return "overflow";
 
     // checks if the last operand is a number
     return isNaN(this.operandStack[this.operandStack.length - 1]) ? null : this.operandStack.pop();
