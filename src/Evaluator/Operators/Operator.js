@@ -1,3 +1,6 @@
+// polyfill for BigInt which is not supported in IE
+import bigInt from 'big-integer';
+
 class Operator {
   priority() {
     throw new Error('function not implemented');
@@ -30,8 +33,8 @@ class AddOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = operandOne + operandTwo;
-    return result;
+    let result = bigInt(operandOne).add(bigInt(operandTwo));
+    return result.toString();
   }
 }
 
@@ -41,8 +44,8 @@ class DivideOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = operandOne / operandTwo;
-    return result;
+    let result = bigInt(operandOne).divide(bigInt(operandTwo));
+    return result.toString();
   }
 }
 
@@ -62,8 +65,8 @@ class MultiplyOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = operandOne * operandTwo;
-    return result;
+    let result = bigInt(operandOne).multiply(bigInt(operandTwo));
+    return result.toString();
   }
 }
 
@@ -83,8 +86,8 @@ class SubtractOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = operandOne - operandTwo;
-    return result;
+    let result = bigInt(operandOne).minus(bigInt(operandTwo));
+    return result.toString();
   }
 }
 
@@ -94,8 +97,8 @@ class ExponentOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = Math.pow(operandOne, operandTwo);
-    return result;
+    let result = bigInt(operandOne).pow(bigInt(operandTwo));
+    return result.toString();
   }
 }
 
