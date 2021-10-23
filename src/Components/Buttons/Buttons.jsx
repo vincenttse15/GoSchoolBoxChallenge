@@ -79,18 +79,8 @@ const Buttons = (props) => {
               setExpression('');
             }
             else if (result !== null) {
-              result = result.toString();
-              let ePos = result.indexOf("e+");
-
-              if (ePos !== - 1) {
-                let operandOne = result.slice(0, ePos);
-                let operandTwo = result.slice(ePos + 2);
-                setPreviousExpression(expression);
-                setExpression(operandOne + "*10^" + operandTwo);
-              } else {
-                setPreviousExpression(expression);
-                setExpression(result);
-              }
+              setPreviousExpression(expression);
+              setExpression(result);
             }
             else {
               setPreviousExpression("Invalid expression!");

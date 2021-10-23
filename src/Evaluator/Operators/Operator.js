@@ -24,6 +24,8 @@ class Operator {
   }
 }
 
+// Tried separating child classes into their own folder, but when importing them into this file it gave an error
+// TypeError: Class extends value undefined is not a constructor or null
 class AddOperator extends Operator {
   priority() {
     return 1;

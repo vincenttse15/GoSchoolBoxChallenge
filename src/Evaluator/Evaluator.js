@@ -34,6 +34,11 @@ export class Evaluator {
     return true;
   }
 
+  // replace scientific notation e
+  convertScientificNotation() {
+    this.expression = this.expression.replace("e", "*10^");
+  }
+
   // replaces the negative signs with "$" so it does not get tokenized as an operator
   getNegativeNumbers() {
     // if there is a minus in the first character it will always be used for a negative number
@@ -51,6 +56,7 @@ export class Evaluator {
   }
 
   evaluate() {
+    this.convertScientificNotation();
     let valid = this.validateExpression();
     if (!valid) return null;
 
@@ -82,7 +88,7 @@ export class Evaluator {
         }
         else {
         
-          // evaluate if operator in the stack has a higher priority than current operator that is going to be added
+          // evaluate if last operator in the stack has a higher priority than current operator that is going to be added
           while (this.operatorStack.length > 0 && this.peekOperator() !== new Operator().getOperator("(") && 
                  this.peekOperator().priority() >= operator.priority()) {
                    this.process();
