@@ -9,11 +9,17 @@ export class Evaluator {
   }
 
   process() {
-    let operandTwo = this.operandStack.pop();
-    let operandOne = this.operandStack.pop();
     let operator = this.operatorStack.pop();
-    let result = operator.execute(operandOne, operandTwo);
-    this.operandStack.push(result);
+    if (!operator.twoOperands()) {
+      let operandOne = this.operandStack.pop();
+      let result = operator.execute(operandOne);
+      this.operandStack.push(result);
+    } else {
+      let operandTwo = this.operandStack.pop();
+      let operandOne = this.operandStack.pop();
+      let result = operator.execute(operandOne, operandTwo);
+      this.operandStack.push(result);
+    }
   }
 
   peekOperator() {

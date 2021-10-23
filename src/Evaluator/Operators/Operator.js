@@ -7,6 +7,10 @@ class Operator {
     throw new Error('function not implemented');
   }
 
+  twoOperands() {
+    throw new Error('function not implemented');
+  }
+
   getOperator(token) {
     if (token in OperatorMap) {
       return OperatorMap[token];
@@ -35,6 +39,10 @@ class AddOperator extends Operator {
     let result = +operandOne + +operandTwo;
     return result.toString();
   }
+  
+  twoOperands() {
+    return true;
+  }
 }
 
 class DivideOperator extends Operator {
@@ -46,6 +54,10 @@ class DivideOperator extends Operator {
     let result = +operandOne / +operandTwo;
     return result.toString();
   }
+
+  twoOperands() {
+    return true;
+  }
 }
 
 class LParen extends Operator {
@@ -55,6 +67,10 @@ class LParen extends Operator {
 
   execute(operandOne, operandTwo) {
     return null;
+  }
+
+  twoOperands() {
+    return false;
   }
 }
 
@@ -67,6 +83,10 @@ class MultiplyOperator extends Operator {
     let result = +operandOne * +operandTwo;
     return result.toString();
   }
+
+  twoOperands() {
+    return true;
+  }
 }
 
 class RParen extends Operator {
@@ -76,6 +96,10 @@ class RParen extends Operator {
 
   execute(operandOne, operandTwo) {
     return null;
+  }
+
+  twoOperands() {
+    return false;
   }
 }
 
@@ -88,6 +112,10 @@ class SubtractOperator extends Operator {
     let result = +operandOne - +operandTwo;
     return result.toString();
   }
+
+  twoOperands() {
+    return true;
+  }
 }
 
 class ExponentOperator extends Operator {
@@ -99,6 +127,25 @@ class ExponentOperator extends Operator {
     let result = Math.pow(+operandOne, +operandTwo);
     return result.toString();
   }
+
+  twoOperands() {
+    return true;
+  }
+}
+
+class SquareRootOperator extends Operator {
+  priority() {
+    return 3;
+  }
+
+  execute(operandOne, operandTwo) {
+    let result = Math.sqrt(+operandOne);
+    return result.toString();
+  }
+
+  twoOperands() {
+    return false;
+  }
 }
 
 export const OperatorMap = {
@@ -109,6 +156,7 @@ export const OperatorMap = {
   "(" : new LParen(),
   ")" : new RParen(),
   "^" : new ExponentOperator(),
+  "sqrt" : new SquareRootOperator(),
 }
 
 

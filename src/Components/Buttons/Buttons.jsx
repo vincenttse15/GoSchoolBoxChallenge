@@ -1,5 +1,6 @@
 import { RiDivideFill, RiCloseFill } from 'react-icons/ri';
 import { CgMathMinus, CgMathEqual, CgMathPlus } from 'react-icons/cg';
+import { FaSquareRootAlt } from 'react-icons/fa';
 import { Evaluator } from '../../evaluator/Evaluator';
 import './Buttons.css';
 
@@ -10,12 +11,34 @@ const Buttons = (props) => {
     expression
   } = props;
 
+  // evaluate expression
+  function evaluate() {
+    const evaluator = expression !== '' ? new Evaluator(expression) : new Evaluator("0");
+    let result = evaluator.evaluate();
+    if (result === "overflow") {
+      setPreviousExpression('Result is too big!');
+      setExpression('');
+    }
+    else if (result !== null) {
+      setPreviousExpression(expression);
+      setExpression(result);
+    }
+    else {
+      setPreviousExpression("Invalid expression!");
+      setExpression('');
+    }
+  }
+
   return (
     <div className="buttons-container">
       <div className="row-container">
         <button className="button operators" onClick={() => setExpression(expression + "^")}>
           X
           <span className="superscript">y</span>
+        </button>
+        <button className="button operators" onClick={() => setExpression("sqrt(" + expression + ")")}
+        >
+          <FaSquareRootAlt className="icon" />
         </button>
       </div>
       <div className="row-container">
@@ -71,23 +94,7 @@ const Buttons = (props) => {
         <button className="button numbers" onClick={() => setExpression(expression + "0")}>0</button>
         <button className="button numbers" onClick={() => setExpression(expression + ".")}>.</button>
         <button className="button equal"
-          onClick={() => {
-            const evaluator = expression !== '' ? new Evaluator(expression) : new Evaluator("0");
-            let result = evaluator.evaluate();
-            if (result === "overflow") {
-              setPreviousExpression('Result is too big!');
-              setExpression('');
-            }
-            else if (result !== null) {
-              setPreviousExpression(expression);
-              setExpression(result);
-            }
-            else {
-              setPreviousExpression("Invalid expression!");
-              setExpression('');
-            }
-          }
-          }
+          onClick={() => evaluate()}
         >
           <CgMathEqual className="icon" />
         </button>
@@ -95,7 +102,7 @@ const Buttons = (props) => {
           <CgMathPlus className="icon" />
         </button>
       </div>
-    </div>
+    </div >
   )
 }
 
