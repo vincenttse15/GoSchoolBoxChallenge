@@ -42,7 +42,11 @@ export class Evaluator {
 
   // replace scientific notation e
   convertScientificNotation() {
-    this.expression = this.expression.replace("e", "*10^");
+    if (this.expression.includes("e+")) {
+      this.expression = this.expression.replace("e+", "*10^");
+    } else {
+      this.expression = this.expression.replace("e", "*10^");
+    }
   }
 
   // replaces the negative signs with "$" so it does not get tokenized as an operator
@@ -63,13 +67,14 @@ export class Evaluator {
 
   evaluate() {
     this.convertScientificNotation();
+    console.log(this.expression);
     let valid = this.validateExpression();
     if (!valid) return null;
 
     this.getNegativeNumbers();
 
     const tokenized = this.expression.split(/([-+()*/^])/g).filter(Boolean);
-    console.log(tokenized);
+
     for (let token of tokenized) {
       if (!isNaN(token)) {
         this.operandStack.push(token);
@@ -116,6 +121,13 @@ export class Evaluator {
     //if (this.operandStack[this.operandStack.length - 1] > Number.MAX_SAFE_INTEGER || this.operandStack[this.operandStack.length - 1] < Number.MIN_SAFE_INTEGER) return "overflow";
 
     // checks if the last operand is a number
-    return isNaN(this.operandStack[this.operandStack.length - 1]) ? null : this.operandStack.pop();
+    if (isNaN(this.operandStack[this.operandStack.length - 1])) {
+      return null;
+    }
+    else {
+      let result = this.operandStack.pop();
+      if (result.length > 26) return "Infinity";
+      else return result;
+    }
   }
 }

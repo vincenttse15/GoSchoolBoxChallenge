@@ -15,8 +15,8 @@ const Buttons = (props) => {
   function evaluate() {
     const evaluator = expression !== '' ? new Evaluator(expression) : new Evaluator("0");
     let result = evaluator.evaluate();
-    if (result === "overflow") {
-      setPreviousExpression('Result is too big!');
+    if (result === "Infinity") {
+      setPreviousExpression('Infinity');
       setExpression('');
     }
     else if (result !== null) {
