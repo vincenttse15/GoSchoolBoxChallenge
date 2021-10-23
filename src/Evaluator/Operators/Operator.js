@@ -1,5 +1,7 @@
 import BigNumber from "bignumber.js"
 
+BigNumber.set({ DECIMAL_PLACES: 10});
+
 class Operator {
   priority() {
     throw new Error('function not implemented');
