@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Screen from '../screen/Screen';
-import Buttons from '../buttons/Buttons';
+import Screen from '../Screen/Screen';
+import Buttons from '../Buttons/Buttons';
 import './Calculator.css';
 
 const Calculator = () => {

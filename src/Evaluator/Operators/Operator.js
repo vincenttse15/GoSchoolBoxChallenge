@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js"
+
 class Operator {
   priority() {
     throw new Error('function not implemented');
@@ -36,7 +38,8 @@ class AddOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = +operandOne + +operandTwo;
+    //let result = +operandOne + +operandTwo;
+    let result = new BigNumber(operandOne).plus(new BigNumber(operandTwo));
     return result.toString();
   }
   
@@ -51,7 +54,8 @@ class DivideOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = +operandOne / +operandTwo;
+    //let result = +operandOne / +operandTwo;
+    let result = new BigNumber(operandOne).dividedBy(new BigNumber(operandTwo));
     return result.toString();
   }
 
@@ -80,7 +84,8 @@ class MultiplyOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = +operandOne * +operandTwo;
+    //let result = +operandOne * +operandTwo;
+    let result = new BigNumber(operandOne).multipliedBy(new BigNumber(operandTwo));
     return result.toString();
   }
 
@@ -109,7 +114,8 @@ class SubtractOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = +operandOne - +operandTwo;
+    //let result = +operandOne - +operandTwo;
+    let result = new BigNumber(operandOne).minus(new BigNumber(operandTwo));
     return result.toString();
   }
 
@@ -124,7 +130,8 @@ class ExponentOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = Math.pow(+operandOne, +operandTwo);
+    //let result = Math.pow(+operandOne, +operandTwo);
+    let result = new BigNumber(operandOne).exponentiatedBy(new BigNumber(operandTwo));
     return result.toString();
   }
 
@@ -139,7 +146,8 @@ class SquareRootOperator extends Operator {
   }
 
   execute(operandOne, operandTwo) {
-    let result = Math.sqrt(+operandOne);
+    //let result = Math.sqrt(+operandOne);
+    let result = new BigNumber(operandOne).sqrt();
     return result.toString();
   }
 

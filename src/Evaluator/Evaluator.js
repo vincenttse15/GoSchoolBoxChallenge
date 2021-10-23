@@ -1,5 +1,5 @@
-import Operator from './operators/Operator';
-import { OperatorMap } from './operators/Operator';
+import Operator from './operators/operator';
+import { OperatorMap } from './operators/operator';
 
 export class Evaluator {
   constructor(expression) {
@@ -113,7 +113,7 @@ export class Evaluator {
     if (this.operandStack.length > 1) return null;
 
     // check overflow
-    if (this.operandStack[this.operandStack.length - 1] > Number.MAX_SAFE_INTEGER || this.operandStack[this.operandStack.length - 1] < Number.MIN_SAFE_INTEGER) return "overflow";
+    //if (this.operandStack[this.operandStack.length - 1] > Number.MAX_SAFE_INTEGER || this.operandStack[this.operandStack.length - 1] < Number.MIN_SAFE_INTEGER) return "overflow";
 
     // checks if the last operand is a number
     return isNaN(this.operandStack[this.operandStack.length - 1]) ? null : this.operandStack.pop();

@@ -1,7 +1,7 @@
 import { RiDivideFill, RiCloseFill } from 'react-icons/ri';
 import { CgMathMinus, CgMathEqual, CgMathPlus } from 'react-icons/cg';
 import { FaSquareRootAlt } from 'react-icons/fa';
-import { Evaluator } from '../../evaluator/Evaluator';
+import { Evaluator } from '../../evaluator/evaluator';
 import './Buttons.css';
 
 const Buttons = (props) => {
